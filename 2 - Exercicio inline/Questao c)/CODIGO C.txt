@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+char f = -100;
+long long int g;
+
+int main(void) {
+    __asm__ volatile (
+        ".intel_syntax noprefix           \n"
+        "mov rax, 0                       \n"
+        "mov al, BYTE PTR [f]             \n"
+        "shl rax, 56                      \n"
+        "sar rax, 56                      \n"
+        "mov QWORD PTR [g], rax           \n"
+        ".att_syntax prefix               \n"
+    );
+    printf("g = %lld\n", g);
+    return 0;
+}

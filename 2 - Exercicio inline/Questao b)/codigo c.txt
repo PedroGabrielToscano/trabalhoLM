@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int a = 2, b = 3, c = 4, x;
+
+int main(void) {
+    __asm__ volatile (
+        ".intel_syntax noprefix         \n"  
+        "mov eax, DWORD PTR [a]         \n"  
+        "mov edx, eax                   \n"  
+        "mov ecx, DWORD PTR [b]         \n" 
+        "not ecx                      \n"  
+        "mov ebx, DWORD PTR [c]         \n" 
+        "or ecx, ebx                  \n"  
+        "and ecx, edx                 \n"  
+        "xor eax, ecx                 \n"  
+        "mov DWORD PTR [x], eax         \n"  
+        ".att_syntax prefix             \n"  
+    );
+
+    printf("x = %d\n", x);
+    return 0;
+}
